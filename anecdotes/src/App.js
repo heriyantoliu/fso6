@@ -12,6 +12,16 @@ const App = props => {
 		});
 	};
 
+	const addAnecdotes = event => {
+		event.preventDefault();
+		const content = event.target.anecdotes.value;
+		props.store.dispatch({
+			type: 'NEW_ANECDOTES',
+			data: { content }
+		});
+		event.target.anecdotes.value = '';
+	};
+
 	return (
 		<div>
 			<h2>Anecdotes</h2>
@@ -25,11 +35,11 @@ const App = props => {
 				</div>
 			))}
 			<h2>create new</h2>
-			<form>
+			<form onSubmit={addAnecdotes}>
 				<div>
-					<input />
+					<input name='anecdotes' />
 				</div>
-				<button>create</button>
+				<button type='submit'>create</button>
 			</form>
 		</div>
 	);
