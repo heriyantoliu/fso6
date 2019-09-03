@@ -1,6 +1,4 @@
-const initialMessage = 'Test Notification';
-
-const notificationReducer = (state = initialMessage, action) => {
+const notificationReducer = (state = null, action) => {
 	switch (action.type) {
 		case 'SET_NOTIFICATION':
 			return action.message;
