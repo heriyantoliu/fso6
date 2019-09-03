@@ -1,20 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { addVote } from '../reducers/anecdoteReducer';
 import { setNotification } from '../reducers/notificationReducer';
 
-const AnecdoteList = ({ store }) => {
-	const anecdotes = store.getState().anecdotes;
-	const filter = store.getState().filter;
+const AnecdoteList = props => {
+	const anecdotes = props.anecdotes;
+	const filter = props.filter;
 
 	const anecdotesToShow = anecdotes.filter(a =>
 		a.content.toLowerCase().includes(filter.toLowerCase())
 	);
 
 	const vote = (id, content) => {
-		store.dispatch(addVote(id));
-		store.dispatch(setNotification(`you voted ${content}`));
+		props.addVote(id);
+		props.setNotification(`you voted ${content}`);
 		setTimeout(() => {
-			store.dispatch(setNotification(null));
+			props.setNotification(null);
 		}, 5000);
 	};
 	return (
@@ -34,4 +35,19 @@ const AnecdoteList = ({ store }) => {
 	);
 };
 
-export default AnecdoteList;
+const mapStateToProps = state => {
+	return {
+		anecdotes: state.anecdotes,
+		filter: state.filter
+	};
+};
+
+const mapDispatchToProps = {
+	addVote,
+	setNotification
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(AnecdoteList);
