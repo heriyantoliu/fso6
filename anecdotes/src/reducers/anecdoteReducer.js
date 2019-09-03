@@ -28,10 +28,10 @@ export const addVote = id => {
 	};
 };
 
-export const createAnecdotes = content => {
+export const createAnecdotes = data => {
 	return {
 		type: 'NEW_ANECDOTES',
-		data: { content, votes: 0 }
+		data
 	};
 };
 
